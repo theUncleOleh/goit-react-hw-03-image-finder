@@ -1,23 +1,47 @@
 import React, { PureComponent } from "react";
 
-const SearchBar = () => {
-  {
-    /* <header class="searchbar">
-  <form class="form">
-    <button type="submit" class="button">
-      <span class="button-label">Search</span>
-    </button>
+export default class SearchBar extends PureComponent {
+  state = {
+    imageName: "",
+  };
 
-    <input
-      class="input"
-      type="text"
-      autocomplete="off"
-      autofocus
-      placeholder="Search images and photos"
-    />
-  </form>
-</header> */
+  handleImageChange = (e) => {
+    this.setState({ imageName: e.currentTarget.value.toLowerCase() });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.imageName.trim() === "") {
+      alert("Введите определяющее запрос слово");
+      return;
+    }
+    this.props.onSubmit(this.state.imageName);
+    this.reset();
+  };
+
+  reset = () => {
+    this.setState({ imageName: "" });
+  };
+
+  render() {
+    return (
+      <header>
+        {/* форма поиска картинок и запроса на бэкэнд */}
+        <form onSubmit={this.handleSubmit}>
+          <button type="submit">
+            <span>Search</span>
+          </button>
+
+          <input
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+            value={this.state.imageName}
+            onChange={this.handleImageChange}
+          />
+        </form>
+      </header>
+    );
   }
-};
-
-export default SearchBar;
+}

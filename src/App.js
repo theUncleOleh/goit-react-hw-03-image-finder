@@ -4,25 +4,33 @@ import SearchBar from "./Searchbar";
 
 class App extends PureComponent {
   state = {
-    imageList: [],
+    imageName: "",
+  };
+
+  handleFormSubmit = (imageName) => {
+    this.setState({ imageName });
   };
 
   render() {
     return (
-      <header>
-        <form>
-          <button type="submit">
-            <span>Search</span>
-          </button>
+      <div>
+        <SearchBar onSubmit={this.handleFormSubmit} />
 
-          <input
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
+        {/* галерея картинок */}
+
+        <ul class="gallery">
+          {/* набор ли с картинками */}
+          <li class="gallery-item">
+            <img src="" alt="" />
+          </li>
+        </ul>
+        {/* разметка модального окна */}
+        <div class="overlay">
+          <div class="modal">
+            <img src="" alt="" />
+          </div>
+        </div>
+      </div>
     );
   }
 }
