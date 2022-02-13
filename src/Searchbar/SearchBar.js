@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import { toast } from "react-toastify";
 
 export default class SearchBar extends PureComponent {
   state = {
@@ -12,7 +13,7 @@ export default class SearchBar extends PureComponent {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.imageName.trim() === "") {
-      alert("Введите определяющее запрос слово");
+      toast.error("Введите критерии запроса!");
       return;
     }
     this.props.onSubmit(this.state.imageName);

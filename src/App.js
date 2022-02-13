@@ -1,6 +1,9 @@
 import React, { PureComponent } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import SearchBar from "./Searchbar";
+import ImageGalleryItem from "./ImageGalleryItem/ImageGalleryItem";
 
 class App extends PureComponent {
   state = {
@@ -20,9 +23,7 @@ class App extends PureComponent {
 
         <ul class="gallery">
           {/* набор ли с картинками */}
-          <li class="gallery-item">
-            <img src="" alt="" />
-          </li>
+          <ImageGalleryItem imageItem={this.state.imageName} />
         </ul>
         {/* разметка модального окна */}
         <div class="overlay">
@@ -30,6 +31,7 @@ class App extends PureComponent {
             <img src="" alt="" />
           </div>
         </div>
+        <ToastContainer autoClose={3000} />
       </div>
     );
   }
