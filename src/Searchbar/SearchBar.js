@@ -17,6 +17,7 @@ export default class SearchBar extends PureComponent {
       return;
     }
     this.props.onSubmit(this.state.imageName);
+
     this.reset();
   };
 
