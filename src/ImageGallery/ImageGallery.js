@@ -1,11 +1,13 @@
 import React from "react";
+import s from "./ImageGallery.module.css";
+import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 
 const ImageGallery = ({ pictures }) => {
   return (
-    <ul class="gallery">
-      {pictures.map((picture) => (
-        <li class="gallery-item" key={picture.id}>
-          <img src={picture.webformatURL} alt={picture.tags} />
+    <ul className={s.gallery}>
+      {pictures.map(({ id, webformatURL, tags }) => (
+        <li key={id} className={s.galleryItem}>
+          <ImageGalleryItem webformatURL={webformatURL} tags={tags} />
         </li>
       ))}
       {/* набор ли с картинками */}

@@ -2,6 +2,8 @@ import React, { PureComponent } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import s from "./App.module.css";
+
 import SearchBar from "./Searchbar";
 import ImageGalleryItem from "./ImageGalleryItem/ImageGalleryItem";
 import ImageGallery from "./ImageGallery/ImageGallery";
@@ -19,9 +21,12 @@ class App extends PureComponent {
       )
         .then((res) => res.json())
         .then((data) => {
-          this.setState((prevState) => ({
-            pictures: [...prevState.pictures, ...data.hits],
-          }));
+          this.setState({ pictures: data.hits });
+          // this.setState((prevState) => ({
+
+          //   pictures: [...prevState.pictures, ...data.hits],
+          //   }));
+          // });
         });
     }
   }
