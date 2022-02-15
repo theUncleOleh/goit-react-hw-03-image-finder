@@ -21,12 +21,9 @@ class App extends PureComponent {
       )
         .then((res) => res.json())
         .then((data) => {
-          this.setState({ pictures: data.hits });
-          // this.setState((prevState) => ({
-
-          //   pictures: [...prevState.pictures, ...data.hits],
-          //   }));
-          // });
+          this.setState((prevState) => ({
+            pictures: [...prevState.pictures, ...data.hits],
+          }));
         });
     }
   }
@@ -57,5 +54,4 @@ class App extends PureComponent {
     );
   }
 }
-
 export default App;
