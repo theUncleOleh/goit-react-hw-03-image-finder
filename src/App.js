@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Oval } from "react-loader-spinner";
+import axios from "axios";
 import "./App.css";
 import s from "./App.module.css";
 import SearchBar from "./Searchbar";
@@ -19,21 +20,26 @@ class App extends PureComponent {
     error: null,
   };
 
+  // запросы к бэкэнду
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.imageName !== this.state.imageName) {
+    const prevName = prevState.imageName;
+    const nextName = this.state.imageName;
+    if (prevName !== nextName) {
       this.setState({ loading: true });
 
-      fetch(
-        `https://pixabay.com/api/?q=${this.state.imageName}&page=1&key=24437827-e20f686b1c65a4a2859f17630&image_type=photo&orientation=horizontal&per_page=12`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          this.setState({ pictures: data.hits });
-        })
+      console.log(nextName);
+      console.log(prevName);
+
+      axios
+        .get(
+          `https://pixabay.com/api/?q=${nextName}&page=1&key=24437827-e20f686b1c65a4a2859f17630&image_type=photo&orientation=horizontal&per_page=12`
+        )
+        .then((response) => this.setState({ pictures: response.data.hits }))
         .catch((error) => this.setState({ error }))
         .finally(() => this.setState({ loading: false }));
     }
   }
+  // модалка
   toggleModal = () => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
@@ -41,7 +47,7 @@ class App extends PureComponent {
   };
 
   // .then(({id, webformatURL, largeImageURL}) => this.setState({id, webformatURL,largeImageURL}));
-
+  // метод для измение строки поиска
   handleFormSubmit = (imageName) => {
     this.setState({ imageName });
   };
@@ -51,14 +57,14 @@ class App extends PureComponent {
     return (
       <div className={s.app}>
         <SearchBar className={s.searchBar} onSubmit={this.handleFormSubmit} />
-        {error && <h1>Картинка {this.state.imageName} не найдена</h1>}
+        {error && <p>Something went wrong: {error.message}</p>}
         {/* галерея картинок */}
         {loading && (
           <div>
             <Oval color="#00BFFF" height={80} width={80} />
           </div>
         )}
-        <ImageGallery pictures={pictures} />
+        {this.state.pictures && <ImageGallery pictures={pictures} />}
 
         {/* разметка модального окна */}
         {showModal && <Modal onClose={this.toggleModal} />}
